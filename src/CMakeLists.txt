@@ -1,0 +1,21 @@
+target_sources(
+        gl_pbr_training
+        PRIVATE
+        RenderGraph.h
+        RenderGraph.cpp
+        Framebuffer.h
+        Framebuffer.cpp
+        Resource.h
+        Resource.cpp
+        Camera.h
+        Camera.cpp
+        Model.h
+        Model.cpp
+        Shader.h
+        Shader.cpp
+        Material.h
+        Material.cpp
+        tiny_obj_loader.h
+)
+
+add_subdirectory(Passes)
