@@ -15,7 +15,7 @@ void Framebuffer::setSize(unsigned int width, unsigned int height) {
 
 void Framebuffer::addTexture(GLint internalFormat, GLint format) {
     if (initialized) throw std::runtime_error("Framebuffer already initialized");
-    if (m_attachments.size() > 15) throw std::runtime_error("Max attachment count reached");
+    if (m_attachments.size() > 8) throw std::runtime_error("Max attachment count reached");
 
     GLuint texture;
     glGenTextures(1, &texture);
@@ -45,10 +45,12 @@ void Framebuffer::init(bool depth) {
 
         glBindRenderbuffer(GL_RENDERBUFFER, m_depth);
 
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 800, 600);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, m_width, m_height);
 
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depth);
     }
+
+    m_depth = depth;
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         throw std::runtime_error("Framebuffer not complete");
@@ -61,6 +63,19 @@ void Framebuffer::use() const {
     if (!initialized) throw std::runtime_error("Framebuffer not initialized");
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
+
+    if (m_depth) glEnable(GL_DEPTH_TEST);
+    else glDisable(GL_DEPTH_TEST);
+
+    GLenum draw_buffers[m_attachments.size()];
+
+    for (int i = 0; i < m_attachments.size(); i++)
+        draw_buffers[i] = GL_COLOR_ATTACHMENT0 + i;
+
+    glDrawBuffers(m_attachments.size(), draw_buffers);
+
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 GLuint Framebuffer::getTexture(int i) const {

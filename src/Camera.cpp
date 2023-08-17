@@ -19,10 +19,10 @@ void Camera::init() {
     m_direction = glm::vec3(0.0f, 0.0f, -1.0f);
     m_up = glm::vec3(0.0f, 1.0f, 0.0f);
 
-    m_fov = 45.0f;
+    m_fov = M_PI/2.0f;
     m_aspect = 1.0f;
     m_near = 0.1f;
-    m_far = 100.0f;
+    m_far = 1000.0f;
 
     updateView();
     updateProjection();

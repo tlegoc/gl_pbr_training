@@ -26,9 +26,9 @@ private:
 //    GLuint m_depth_buffer{};
 
     std::vector<Model*> m_models;
-public:
-    const Camera *m_camera;
 
+    const Camera *m_camera;
+public:
     void init() override;
 
     const Framebuffer *getOutputFramebuffer() const;

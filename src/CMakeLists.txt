@@ -15,7 +15,10 @@ target_sources(
         Shader.cpp
         Material.h
         Material.cpp
+        Skybox.h
+        Skybox.cpp
         tiny_obj_loader.h
+        stb_image.h
 )
 
 add_subdirectory(Passes)

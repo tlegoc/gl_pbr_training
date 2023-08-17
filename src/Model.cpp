@@ -78,7 +78,7 @@ void Model::setMaterial(Material *material) {
     m_material = material;
 }
 
-void Model::draw(glm::mat4 view, glm::mat4 projection) {
+void Model::draw(glm::mat4 view, glm::mat4 projection) const {
     if (m_material == nullptr) {
         std::cerr << "Model::draw() called without a material" << std::endl;
         exit(1);

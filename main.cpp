@@ -1,6 +1,7 @@
 #include <iostream>
 
 #define SDL_MAIN_HANDLED
+
 #include <SDL.h>
 #include <GL/glew.h>
 
@@ -10,6 +11,7 @@
 #include "src/Camera.h"
 #include "src/Model.h"
 #include "src/Shader.h"
+#include "src/Skybox.h"
 
 int main() {
     SDL_Init(SDL_INIT_VIDEO);
@@ -20,7 +22,7 @@ int main() {
 
     SDL_Window *window;
 
-    window = SDL_CreateWindow("GL_PBR_TRAINING", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600,
+    window = SDL_CreateWindow("GL_PBR_TRAINING", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800,
                               SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 
     if (window == nullptr) {
@@ -48,16 +50,30 @@ int main() {
 
     Camera camera;
     camera.init();
-    camera.m_position = glm::vec3(0.0f, 0.0f, 3.0f);
+    camera.m_fov = M_PI / 4.0f;
+    camera.m_position = glm::vec3(0.0f, 3.0f, 3.0f);
+    camera.m_direction = glm::normalize(glm::vec3(0.0, -1.0, -1.0));
     camera.updateView();
+    camera.updateProjection();
 
-    Shader shader = Shader::load("shaders/base.vert", "shaders/pbr_prepass_untextured.frag");
+    Skybox::CubemapInfo c_info{
+            "assets/textures/nx.png",
+            "assets/textures/ny.png",
+            "assets/textures/nz.png",
+            "assets/textures/px.png",
+            "assets/textures/py.png",
+            "assets/textures/pz.png"
+    };
+    Skybox skybox = Skybox::load(c_info);
+
+    Shader shader = Shader::load("shaders/core/base.vert", "shaders/core/pbr_prepass_untextured.frag");
 
     Material mat;
     mat.setShader(shader);
 
     Model model = Model();
     model.load("assets/monkey.obj");
+//    model.m_scale = glm::vec3(1.5f);
     model.updateModelMatrix();
     model.setMaterial(&mat);
 
@@ -74,12 +90,16 @@ int main() {
     pbrDeferredPass.init();
     // Link framebuffer
     pbrDeferredPass.setInputFramebuffer(pbrPrepass.getOutputFramebuffer());
+    pbrDeferredPass.setSkybox(&skybox);
+    pbrDeferredPass.setCamera(&camera);
 
     rg.addPass(&pbrPrepass);
     rg.addPass(&pbrDeferredPass);
 
+    uint64_t time = 0;
     auto quit = false;
     while (!quit) {
+        time = SDL_GetTicks64();
         SDL_Event event;
 
         while (SDL_PollEvent(&event)) {
@@ -87,6 +107,11 @@ int main() {
                 quit = true;
             }
         }
+
+        camera.m_position = glm::vec3(glm::cos(time / 1000.0f) * 3.0f, 3.0f, glm::sin(time / 1000.0f) * 3.0f);
+        camera.m_direction = glm::normalize(-camera.m_position);
+        camera.updateView();
+        camera.updateProjection();
 
         rg.execute();
 

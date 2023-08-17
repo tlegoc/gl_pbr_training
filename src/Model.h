@@ -34,7 +34,7 @@ public:
 
     void setMaterial(Material *material);
 
-    void draw(glm::mat4 view, glm::mat4 projection);
+    void draw(glm::mat4 view, glm::mat4 projection) const;
 
     void setNumIndices(GLuint num_indices);
 

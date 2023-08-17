@@ -36,16 +36,15 @@ void PBRDeferredPass::init() {
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    m_shader = Shader::load("shaders/passthrough.vert", "shaders/pbr_deferred_pass.frag");
+    m_shader = Shader::load("shaders/core/passthrough.vert", "shaders/core/pbr_deferred_pass.frag");
 
     m_shader.use();
     glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_base_color"), 0);
-    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_metallic"), 1);
-    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_roughness"), 2);
-    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_reflectance"), 3);
-    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_emissive"), 4);
-    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_normal"), 5);
-    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_occlusion"), 6);
+    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_met_rough_ref"), 1);
+    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_emissive"), 2);
+    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_normal"), 3);
+    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_occ_cc_ccrough"), 4);
+    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "cubemap"), 5);
     glUseProgram(0);
 
     std::cout << "\t-- Initializing done" << std::endl;
@@ -57,6 +56,12 @@ void PBRDeferredPass::setInputFramebuffer(const Framebuffer *framebuffer) {
 
 void PBRDeferredPass::execute() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    glm::mat4 view = m_camera->m_view;
+    glm::mat4 projection = m_camera->m_projection;
+
+    if (m_skybox) m_skybox->draw(view, projection);
+
     m_shader.use();
 
     glActiveTexture(GL_TEXTURE0);
@@ -75,12 +80,17 @@ void PBRDeferredPass::execute() {
     glBindTexture(GL_TEXTURE_2D, m_input_framebuffer->getTexture(4));
 
     glActiveTexture(GL_TEXTURE5);
-    glBindTexture(GL_TEXTURE_2D, m_input_framebuffer->getTexture(5));
-
-    glActiveTexture(GL_TEXTURE6);
-    glBindTexture(GL_TEXTURE_2D, m_input_framebuffer->getTexture(6));
+    glBindTexture(GL_TEXTURE_CUBE_MAP, m_skybox->getCubemap());
 
     glBindVertexArray(m_vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
+}
+
+void PBRDeferredPass::setSkybox(const Skybox *skybox) {
+    m_skybox = skybox;
+}
+
+void PBRDeferredPass::setCamera(const Camera *camera) {
+    m_camera = camera;
 }

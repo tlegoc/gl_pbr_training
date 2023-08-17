@@ -321,7 +321,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
 /// `callback.mtllib_cb`.
 /// Returns true when loading .obj/.mtl become success.
 /// Returns warning and error message into `err`
-/// See `examples/callback_api/` for how to use this function.
+/// See `examples/callback_api/` for how to draw this function.
 bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
                          void *user_data = NULL,
                          MaterialReader *readMatFn = NULL,

@@ -19,7 +19,7 @@ public:
 
     GLuint getProgram() const;
 
-    void use();
+    void use() const;
 };
 
 
