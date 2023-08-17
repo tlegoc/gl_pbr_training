@@ -50,7 +50,7 @@ int main() {
 
     Camera camera;
     camera.init();
-    camera.m_fov = M_PI / 4.0f;
+//    camera.m_fov = M_PI / 4.0f;
     camera.m_position = glm::vec3(0.0f, 3.0f, 3.0f);
     camera.m_direction = glm::normalize(glm::vec3(0.0, -1.0, -1.0));
     camera.updateView();
@@ -108,7 +108,7 @@ int main() {
             }
         }
 
-        camera.m_position = glm::vec3(glm::cos(time / 1000.0f) * 3.0f, 3.0f, glm::sin(time / 1000.0f) * 3.0f);
+        camera.m_position = glm::vec3(glm::cos(time / 1000.0f) * 3.0f, glm::cos(time / 1000.0f) * 3.0f, glm::sin(time / 1000.0f) * 3.0f);
         camera.m_direction = glm::normalize(-camera.m_position);
         camera.updateView();
         camera.updateProjection();
