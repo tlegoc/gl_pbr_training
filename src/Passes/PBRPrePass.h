@@ -6,6 +6,7 @@
 #define GL_PBR_TRAINING_PBRPREPASS_H
 
 #include "../RenderGraph.h"
+#include "../Framebuffer.h"
 #include "../Camera.h"
 #include "../Model.h"
 
@@ -13,17 +14,16 @@
 
 class PBRPrePass : public Pass {
 private:
-    GLuint m_output_framebuffer{};
+    Framebuffer m_output_framebuffer{};
 
-    GLuint m_texture_base_color{};
-    GLuint m_texture_metallic{};
-    GLuint m_texture_roughness{};
-    GLuint m_texture_reflectance{};
-    GLuint m_texture_emissive{};
-    GLuint m_texture_normal{};
-    GLuint m_texture_ao{};
-    GLuint m_depth_buffer{};
-
+//    GLuint m_texture_base_color{};
+//    GLuint m_texture_metallic{};
+//    GLuint m_texture_roughness{};
+//    GLuint m_texture_reflectance{};
+//    GLuint m_texture_emissive{};
+//    GLuint m_texture_normal{};
+//    GLuint m_texture_ao{};
+//    GLuint m_depth_buffer{};
 
     std::vector<Model*> m_models;
 public:
@@ -31,7 +31,7 @@ public:
 
     void init() override;
 
-    GLuint getOutputFramebuffer() const;
+    const Framebuffer *getOutputFramebuffer() const;
 
     void addModel(Model *model);
 

@@ -72,6 +72,7 @@ int main() {
 
     // Combine pass
     pbrDeferredPass.init();
+    // Link framebuffer
     pbrDeferredPass.setInputFramebuffer(pbrPrepass.getOutputFramebuffer());
 
     rg.addPass(&pbrPrepass);

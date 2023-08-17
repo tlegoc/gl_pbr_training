@@ -45,10 +45,17 @@ target_link_libraries(gl_pbr_training PUBLIC OpenGL::GL OpenGL::GLU glm ${GLEW_L
 # Set output directory
 set_target_properties(gl_pbr_training PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_custom_command(TARGET gl_pbr_training POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/shaders $<TARGET_FILE_DIR:gl_pbr_training>/shaders)
 
-add_custom_command(TARGET gl_pbr_training POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:gl_pbr_training>/assets)
+add_custom_command(
+        TARGET gl_pbr_training
+        POST_BUILD COMMAND ${CMAKE_COMMAND}
+        -E create_symlink ${CMAKE_SOURCE_DIR}/shaders ${CMAKE_BINARY_DIR}/bin/shaders
+        DEPENDS ${CMAKE_BINARY_DIR}/bin/shaders
+)
+
+add_custom_command(
+        TARGET gl_pbr_training
+        POST_BUILD COMMAND ${CMAKE_COMMAND}
+        -E create_symlink ${CMAKE_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/bin/assets
+        DEPENDS ${CMAKE_BINARY_DIR}/bin/assets
+)
