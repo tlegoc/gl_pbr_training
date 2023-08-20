@@ -18,6 +18,7 @@ void PBRPrePass::init() {
     m_output_framebuffer.addTexture(GL_RGB);
     m_output_framebuffer.addTexture(GL_RGB16F);
     m_output_framebuffer.addTexture(GL_RGB16F);
+    m_output_framebuffer.addTexture(GL_RGB16F);
 
     m_output_framebuffer.init();
 

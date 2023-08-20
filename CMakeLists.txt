@@ -38,9 +38,10 @@ add_subdirectory(thirdparty/GLM)
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(Boost REQUIRED COMPONENTS filesystem)
 include_directories(${GLEW_INCLUDE_DIRS})
 
-target_link_libraries(gl_pbr_training PUBLIC OpenGL::GL OpenGL::GLU glm ${GLEW_LIBRARIES})
+target_link_libraries(gl_pbr_training PUBLIC OpenGL::GL OpenGL::GLU glm ${GLEW_LIBRARIES} Boost::filesystem)
 
 # Set output directory
 set_target_properties(gl_pbr_training PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

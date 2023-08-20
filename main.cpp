@@ -44,9 +44,14 @@ int main() {
         return -1;
     }
 
+    if (!GLEW_ARB_shading_language_include) throw std::runtime_error("ARB_shading_language_include not supported!");
+
     SDL_GL_SetSwapInterval(1);
 
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+
+    // If you want to use #include in your shaders
+//    Shader::buildGLIncludes();
 
     Camera camera;
     camera.init();

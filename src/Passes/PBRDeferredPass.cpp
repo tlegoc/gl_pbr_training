@@ -43,8 +43,9 @@ void PBRDeferredPass::init() {
     glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_met_rough_ref"), 1);
     glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_emissive"), 2);
     glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_normal"), 3);
-    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_occ_cc_ccrough"), 4);
-    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "cubemap"), 5);
+    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_position"), 4);
+    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_occ_cc_ccrough"), 5);
+    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "cubemap"), 6);
     glUseProgram(0);
 
     std::cout << "\t-- Initializing done" << std::endl;
@@ -80,6 +81,9 @@ void PBRDeferredPass::execute() {
     glBindTexture(GL_TEXTURE_2D, m_input_framebuffer->getTexture(4));
 
     glActiveTexture(GL_TEXTURE5);
+    glBindTexture(GL_TEXTURE_2D, m_input_framebuffer->getTexture(5));
+
+    glActiveTexture(GL_TEXTURE6);
     glBindTexture(GL_TEXTURE_CUBE_MAP, m_skybox->getCubemap());
 
     glBindVertexArray(m_vao);
