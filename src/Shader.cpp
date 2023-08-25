@@ -33,7 +33,7 @@
 //    }
 //}
 
-std::string Shader::readFile(const char *path) {
+std::string Shader::readFile(const std::string& path) {
     std::ifstream file(path);
 
     // if file not found
@@ -51,9 +51,9 @@ std::string Shader::readFile(const char *path) {
     return code;
 }
 
-std::string Shader::loadFilePreprocess(const std::string &source, const boost::filesystem::path &filename, int level) {
+std::string Shader::loadFilePreprocess(const std::string &source, const std::string& filename, int level) {
     if (level > 32)
-        throw std::runtime_error("header inclusion depth limit reached, might be caused by cyclic header inclusion");
+        throw std::runtime_error("Depth limit reached.");
     using namespace std;
 
 //    static const boost::regex re("^[ ]*#[ ]*include[ ]+[\"<](.*)[\">].*");
@@ -71,11 +71,11 @@ std::string Shader::loadFilePreprocess(const std::string &source, const boost::f
             std::string include_file = matches[1];
             std::string include_string;
 
-            include_file = filename.parent_path().string() + "/" + include_file;
+            include_file.insert(0, filename.substr(0, filename.find_last_of('/')) + '/');
 
-            include_string = readFile(include_file.c_str());
+            include_string = readFile(include_file);
 
-            output << loadFilePreprocess(include_string, filename.parent_path().c_str() + include_file, level + 1) << endl;
+            output << loadFilePreprocess(include_string, include_file, level + 1) << endl;
         } else {
             output << line << endl;
         }
@@ -94,7 +94,6 @@ Shader Shader::load(const char *vertex_shader_path, const char *fragment_shader_
     vertex_shader_code = loadFilePreprocess(vertex_shader_code, vertex_shader_path);
     fragment_shader_code = loadFilePreprocess(fragment_shader_code, fragment_shader_path);
 
-    // Preprocessing
     const char *vertex_shader_code_c_str = vertex_shader_code.c_str();
     const char *fragment_shader_code_c_str = fragment_shader_code.c_str();
 
