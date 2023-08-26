@@ -14,5 +14,5 @@
   }, {
     "name" : "boost-regex",
     "version>=" : "1.82.0#2"
-  } ]
+  }]
 }

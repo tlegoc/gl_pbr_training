@@ -3,6 +3,10 @@ project(gl_pbr_training)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 add_executable(gl_pbr_training main.cpp)
 
 add_subdirectory(src)
@@ -20,8 +24,6 @@ target_link_libraries(gl_pbr_training
         )
 
 target_link_libraries(gl_pbr_training PRIVATE GLEW::GLEW Boost::regex glm::glm)
-
-set_target_properties(gl_pbr_training PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if (UNIX AND NOT APPLE)
     add_custom_command(

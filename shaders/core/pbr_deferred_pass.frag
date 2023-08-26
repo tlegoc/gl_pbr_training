@@ -2,7 +2,7 @@
 // Implementation heavily based on Google's filament
 // https://google.github.io/filament/Filament.html
 
-#include "pbr.glsl"
+#include "common/pbr.glsl"
 
 in vec2 vUV;
 
@@ -50,6 +50,6 @@ void main() {
 
 //    color = BRDF(normalize(vec3(0.0, -1.0, -1.0)), vec3(0.0, -1.0, 0.0), normal, mp);
 //    color = texture(cubemap, reflect(normal, normal)).rgb;
-    color = position;
+    color = normal;
 }
 

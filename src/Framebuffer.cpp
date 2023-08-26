@@ -67,12 +67,12 @@ void Framebuffer::use() const {
     if (m_depth) glEnable(GL_DEPTH_TEST);
     else glDisable(GL_DEPTH_TEST);
 
-    GLenum draw_buffers[m_attachments.size()];
+    std::vector<GLenum> draw_buffers(m_attachments.size());
 
     for (int i = 0; i < m_attachments.size(); i++)
         draw_buffers[i] = GL_COLOR_ATTACHMENT0 + i;
 
-    glDrawBuffers(m_attachments.size(), draw_buffers);
+    glDrawBuffers(m_attachments.size(), draw_buffers.data());
 
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
