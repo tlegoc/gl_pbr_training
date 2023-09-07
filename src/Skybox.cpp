@@ -85,7 +85,7 @@ Skybox Skybox::load(CubemapInfo faces) {
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-    s.m_shader = Shader::load("shaders/core/skybox.vert", "shaders/core/skybox.frag");
+    s.m_shader = Shader::load("shaders/core/Specific/skybox.vert", "shaders/core/Specific/skybox.frag");
 
     // Cube vao
     float cubeVertices[] = {
@@ -145,7 +145,7 @@ Skybox Skybox::load(CubemapInfo faces) {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glBindVertexArray(0);
 
-    s.m_model = glm::scale(glm::mat4(1.0), glm::vec3(100.0f));
+    s.m_model = glm::scale(glm::mat4(1.0), glm::vec3(500.0f));
 
     return s;
 }
@@ -156,6 +156,7 @@ GLuint Skybox::getCubemap() const {
 
 void Skybox::draw(glm::mat4 view, glm::mat4 projection) const {
     glDisable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
 
     m_shader.use();
     glUniformMatrix4fv(0, 1, GL_FALSE, &m_model[0][0]);

@@ -13,11 +13,17 @@ void PBRPrePass::init() {
 
     m_output_framebuffer.setSize(800, 800);
 
+    // Color
     m_output_framebuffer.addTexture(GL_RGBA);
+    // Metallic : Roughness : Reflectance
     m_output_framebuffer.addTexture(GL_RGB16F);
+    // Emmissive
     m_output_framebuffer.addTexture(GL_RGB);
+    // Normal
     m_output_framebuffer.addTexture(GL_RGB16F);
+    // Position
     m_output_framebuffer.addTexture(GL_RGB16F);
+    // Occlusion : Clearcoat : Clearcoat Roughness
     m_output_framebuffer.addTexture(GL_RGB16F);
 
     m_output_framebuffer.init();
@@ -38,6 +44,9 @@ void PBRPrePass::setCamera(const Camera *camera) {
 }
 
 void PBRPrePass::execute() {
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+
     m_output_framebuffer.use();
 
     glm::mat4 view = m_camera->m_view;

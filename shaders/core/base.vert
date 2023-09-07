@@ -1,12 +1,11 @@
 #version 450
 
 // Basic MVP
-
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
 layout(location = 2) in vec2 UV;
 
-// These must be set correctly if building another shader
+// These must be set correctly if building another shader used in Model.draw()
 layout(location = 0) uniform mat4 model;
 layout(location = 1) uniform mat4 view;
 layout(location = 2) uniform mat4 projection;

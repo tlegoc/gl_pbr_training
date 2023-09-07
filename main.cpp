@@ -70,13 +70,13 @@ int main() {
     };
     Skybox skybox = Skybox::load(c_info);
 
-    Shader shader = Shader::load("shaders/core/base.vert", "shaders/core/pbr_prepass_untextured.frag");
+    Shader shader = Shader::load("shaders/core/base.vert", "shaders/core/PBR/untextured.frag");
 
     Material mat;
     mat.setShader(shader);
 
     Model model = Model();
-    model.load("assets/monkey.obj");
+    model.load("assets/material_ball.obj");
 //    model.m_scale = glm::vec3(1.5f);
     model.updateModelMatrix();
     model.setMaterial(&mat);
@@ -101,18 +101,35 @@ int main() {
     rg.addPass(&pbrDeferredPass);
 
     uint64_t time = 0;
+    uint64_t last_time = 0;
     auto quit = false;
+    float camera_distance = 3.0f;
     while (!quit) {
         time = SDL_GetTicks64();
+        float delta_time = (time - last_time) / 1000.0f;
         SDL_Event event;
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 quit = true;
             }
+
+            if (event.type == SDL_MOUSEWHEEL) {
+                camera.m_fov -= event.wheel.y * 0.1f;
+                camera.m_fov = glm::clamp(camera.m_fov, (float) M_PI / 32.0f, (float) M_PI / 1.01f);
+            }
+
+            if (event.type == SDL_KEYDOWN) {
+                if (event.key.keysym.sym == SDLK_UP) {
+                    camera_distance -= 0.1f * delta_time;
+                }
+                if (event.key.keysym.sym == SDLK_DOWN) {
+                    camera_distance += 0.1f * delta_time;
+                }
+            }
         }
 
-        camera.m_position = glm::vec3(glm::cos(time / 1000.0f) * 3.0f, glm::cos(time / 1000.0f) * 3.0f, glm::sin(time / 1000.0f) * 3.0f);
+        camera.m_position = glm::vec3(glm::cos(time / 1000.0f) * camera_distance, glm::cos(time / 10000.0f) * camera_distance, glm::sin(time / 1000.0f) * camera_distance);
         camera.m_direction = glm::normalize(-camera.m_position);
         camera.updateView();
         camera.updateProjection();

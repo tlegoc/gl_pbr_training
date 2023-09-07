@@ -45,7 +45,6 @@ void PBRDeferredPass::init() {
     glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_normal"), 3);
     glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_position"), 4);
     glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_occ_cc_ccrough"), 5);
-    glUniform1i(glGetUniformLocation(m_shader.getProgram(), "cubemap"), 6);
     glUseProgram(0);
 
     std::cout << "\t-- Initializing done" << std::endl;
@@ -56,6 +55,8 @@ void PBRDeferredPass::setInputFramebuffer(const Framebuffer *framebuffer) {
 }
 
 void PBRDeferredPass::execute() {
+    glDisable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     glm::mat4 view = m_camera->m_view;
