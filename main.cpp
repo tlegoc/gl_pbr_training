@@ -79,7 +79,7 @@ int main() {
     model.load("assets/material_ball.obj");
 //    model.m_scale = glm::vec3(1.5f);
     model.updateModelMatrix();
-    model.setMaterial(&mat);
+    model.setMaterial(mat);
 
     RenderGraph rg = RenderGraph();
     PBRPrePass pbrPrepass = PBRPrePass();
@@ -97,6 +97,7 @@ int main() {
     pbrDeferredPass.setSkybox(&skybox);
     pbrDeferredPass.setCamera(&camera);
 
+    // Order matters
     rg.addPass(&pbrPrepass);
     rg.addPass(&pbrDeferredPass);
 

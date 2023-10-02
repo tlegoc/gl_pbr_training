@@ -74,8 +74,8 @@ void Model::load(const std::string &path) {
     std::cout << "\t-- Model loaded: " << path << std::endl;
 }
 
-void Model::setMaterial(Material *material) {
-    m_material = material;
+void Model::setMaterial(Material &material) {
+    m_material = &material;
 }
 
 void Model::draw(glm::mat4 view, glm::mat4 projection) const {

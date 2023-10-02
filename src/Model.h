@@ -32,7 +32,7 @@ public:
 
     void load(const std::string &path);
 
-    void setMaterial(Material *material);
+    void setMaterial(Material &material);
 
     void draw(glm::mat4 view, glm::mat4 projection) const;
 
