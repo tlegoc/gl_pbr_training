@@ -17,11 +17,25 @@ void Material::use() {
         glUniform1i(glGetUniformLocation(m_shader.getProgram(), m_texture_uniforms[i].c_str()), i);
     }
 
+    // Ugly ugly ugly
     for (int i = 0; i < m_float_parameters.size(); ++i) {
         glUniform1f(glGetUniformLocation(m_shader.getProgram(), m_float_parameters_uniforms[i].c_str()), m_float_parameters[i]);
     }
+
+    for (int i = 0; i < m_vec2_parameters.size(); ++i) {
+        glUniform2f(glGetUniformLocation(m_shader.getProgram(), m_vec2_parameters_uniforms[i].c_str()), m_vec2_parameters[i].x, m_vec2_parameters[i].y);
+    }
+
+    for (int i = 0; i < m_vec3_parameters.size(); ++i) {
+        glUniform3f(glGetUniformLocation(m_shader.getProgram(), m_vec3_parameters_uniforms[i].c_str()), m_vec3_parameters[i].x, m_vec3_parameters[i].y, m_vec3_parameters[i].z);
+    }
+
+    for (int i = 0; i < m_vec4_parameters.size(); ++i) {
+        glUniform4f(glGetUniformLocation(m_shader.getProgram(), m_vec4_parameters_uniforms[i].c_str()), m_vec4_parameters[i].x, m_vec4_parameters[i].y, m_vec4_parameters[i].z, m_vec4_parameters[i].w);
+    }
 }
 
+// Very bad code, but I'm not supposed to optimize things yet, just try out pbr
 void Material::setParameter(std::string param, float value) {
     if (std::find(m_float_parameters_uniforms.begin(), m_float_parameters_uniforms.end(), param) != m_float_parameters_uniforms.end()) {
         m_float_parameters[std::find(m_float_parameters_uniforms.begin(), m_float_parameters_uniforms.end(), param) - m_float_parameters_uniforms.begin()] = value;

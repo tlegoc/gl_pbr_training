@@ -43,6 +43,6 @@ void main() {
     vec3 emissive = texture(sampler_emissive, vUV).rgb;
 
 
-    color = normal;
+    color = base_color.rgb;
 }
 
