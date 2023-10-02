@@ -2,7 +2,7 @@
 // Implementation heavily based on Google's filament
 // https://google.github.io/filament/Filament.html
 
-#include "common/pbr.glsl"
+#include "../common/pbr.glsl"
 
 in vec2 vUV;
 
@@ -25,7 +25,7 @@ struct CameraProperties {
 void main() {
     vec4 base_color = texture(sampler_base_color, vUV).rgba;
 
-    if (base_color.a < IGNORE_TRESHOLD) {
+    if (base_color.a < 0.0001) {
         discard;
     }
 
@@ -42,14 +42,7 @@ void main() {
     float clearcoatPerceptualRoughness = texture(sampler_occ_cc_ccrough, vUV).b;
     vec3 emissive = texture(sampler_emissive, vUV).rgb;
 
-    MaterialProperties mp;
-    mp.perceptual_roughness = perceptual_roughness;
-    mp.reflectance = reflectance;
-    mp.metallic = metallic;
-    mp.base_color = base_color.rgb;
 
-//    color = BRDF(normalize(vec3(0.0, -1.0, -1.0)), vec3(0.0, -1.0, 0.0), normal, mp);
-//    color = texture(cubemap, reflect(normal, normal)).rgb;
     color = normal;
 }
 

@@ -34,6 +34,7 @@
 //}
 
 std::string Shader::readFile(const std::string& path) {
+    std::cout << "Reading file: " << path << std::endl;
     std::ifstream file(path);
 
     // if file not found

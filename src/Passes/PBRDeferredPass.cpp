@@ -36,7 +36,7 @@ void PBRDeferredPass::init() {
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    m_shader = Shader::load("shaders/core/passthrough.vert", "shaders/core/pbr_deferred_pass.frag");
+    m_shader = Shader::load("shaders/core/passthrough.vert", "shaders/core/Deferred/pass.frag");
 
     m_shader.use();
     glUniform1i(glGetUniformLocation(m_shader.getProgram(), "sampler_base_color"), 0);
