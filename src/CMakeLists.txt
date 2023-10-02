@@ -19,6 +19,21 @@ target_sources(
         Skybox.cpp
         tiny_obj_loader.h
         stb_image.h
+        imgui.cpp
+        imgui.h
+        imgui_impl_opengl3.cpp
+        imgui_impl_opengl3.h
+        imgui_impl_sdl2.h
+        imgui_impl_sdl2.cpp
+        imconfig.h
+        imgui_internal.h
+        imgui_impl_opengl3_loader.h
+        imstb_textedit.h
+        imgui_draw.cpp
+        imstb_rectpack.h
+        imstb_truetype.h
+        imgui_widgets.cpp
+        imgui_tables.cpp
 )
 
 add_subdirectory(Passes)

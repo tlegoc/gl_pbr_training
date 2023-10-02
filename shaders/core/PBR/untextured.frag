@@ -12,15 +12,18 @@ in vec3 vViewNormal;
 in vec2 vUV;
 in vec3 vPosition;
 
+uniform vec4 ubase_color = vec4(0.81, 0.0, 0.0, 1.0);
+uniform float umetallic = 0.0f;
+uniform float uroughness = 1.0f;
+uniform float ureflectance = 0.5f;
+uniform vec3 uemissive = vec3(0.0, 0.0, 0.0);
+
 void main() {
-    base_color = vec4(0.81, 0.0, 0.0, 1.0);
+    base_color = ubase_color;
 
-    float metallic = 0.0;
-    float roughness = 1.0;
-    float reflectance = 0.5;
-    met_rough_ref = vec3(metallic, roughness, reflectance);
+    met_rough_ref = vec3(umetallic, uroughness, ureflectance);
 
-    emissive = vec3(0.0, 0.0, 0.0);
+    emissive = uemissive;
     normal = vNormal;
     position = vPosition;
 

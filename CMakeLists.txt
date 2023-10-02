@@ -25,7 +25,7 @@ target_link_libraries(gl_pbr_training
 
 target_link_libraries(gl_pbr_training PRIVATE GLEW::GLEW Boost::regex glm::glm)
 
-if (UNIX AND NOT APPLE)
+#if (UNIX AND NOT APPLE)
     add_custom_command(
             TARGET gl_pbr_training
             POST_BUILD COMMAND ${CMAKE_COMMAND}
@@ -39,20 +39,20 @@ if (UNIX AND NOT APPLE)
             -E create_symlink ${CMAKE_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/bin/assets
             DEPENDS ${CMAKE_BINARY_DIR}/bin/assets
     )
-endif()
+#endif()
 
-if (WIN32)
-    add_custom_command(
-            TARGET gl_pbr_training
-            POST_BUILD COMMAND ${CMAKE_COMMAND}
-            -E copy_directory ${CMAKE_SOURCE_DIR}/shaders ${CMAKE_BINARY_DIR}/bin/shaders
-            DEPENDS ${CMAKE_BINARY_DIR}/bin/shaders
-    )
-
-    add_custom_command(
-            TARGET gl_pbr_training
-            POST_BUILD COMMAND ${CMAKE_COMMAND}
-            -E copy_directory ${CMAKE_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/bin/assets
-            DEPENDS ${CMAKE_BINARY_DIR}/bin/assets
-    )
-endif (WIN32)
+#if (WIN32)
+#    add_custom_command(
+#            TARGET gl_pbr_training
+#            POST_BUILD COMMAND ${CMAKE_COMMAND}
+#            -E copy_directory ${CMAKE_SOURCE_DIR}/shaders ${CMAKE_BINARY_DIR}/bin/shaders
+#            DEPENDS ${CMAKE_BINARY_DIR}/bin/shaders
+#    )
+#
+#    add_custom_command(
+#            TARGET gl_pbr_training
+#            POST_BUILD COMMAND ${CMAKE_COMMAND}
+#            -E copy_directory ${CMAKE_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/bin/assets
+#            DEPENDS ${CMAKE_BINARY_DIR}/bin/assets
+#    )
+#endif (WIN32)
