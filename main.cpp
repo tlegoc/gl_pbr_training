@@ -194,6 +194,35 @@ int main() {
         mat.setParameter("ureflectance", reflectance);
         mat.setParameter("uemissive", emissive);
 
+        int size_x = ImGui::GetContentRegionAvail().x/2;
+        ImGui::BeginGroup();
+        ImGui::Text("Color");
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(0), ImVec2(size_x, size_x));
+        ImGui::EndGroup();
+        ImGui::SameLine();
+        ImGui::BeginGroup();
+        ImGui::Text("Metallic/Roughness/Reflectance");
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(1), ImVec2(size_x, size_x));
+        ImGui::EndGroup();
+        ImGui::BeginGroup();
+        ImGui::Text("Emissive");
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(2), ImVec2(size_x, size_x));
+        ImGui::EndGroup();
+        ImGui::SameLine();
+        ImGui::BeginGroup();
+        ImGui::Text("Normal");
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(3), ImVec2(size_x, size_x));
+        ImGui::EndGroup();
+        ImGui::BeginGroup();
+        ImGui::Text("Position");
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(4), ImVec2(size_x, size_x));
+        ImGui::EndGroup();
+        ImGui::SameLine();
+        ImGui::BeginGroup();
+        ImGui::Text("Occlusion/Clearcoat/Clearcoat Roughness");
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(5), ImVec2(size_x, size_x));
+        ImGui::EndGroup();
+
         ImGui::End();
 
         ImGui::Render();
