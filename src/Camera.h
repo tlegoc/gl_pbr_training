@@ -24,7 +24,7 @@ public:
     void updateView();
     void updateProjection();
 
-    void init();
+    void init(int width, int height);
 };
 
 

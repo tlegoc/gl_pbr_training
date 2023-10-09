@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-void PBRDeferredPass::init() {
+void PBRDeferredPass::init(int width, int height) {
     std::cout << "\t-- Initializing PBR Deferred pass" << std::endl;
 
     const GLfloat vertices[] = {

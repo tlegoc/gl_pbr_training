@@ -17,6 +17,9 @@
 #include "src/Shader.h"
 #include "src/Skybox.h"
 
+#define WIDTH 1600
+#define HEIGHT 900
+
 int main() {
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -27,7 +30,7 @@ int main() {
 
     SDL_Window *window;
 
-    window = SDL_CreateWindow("GL_PBR_TRAINING", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800,
+    window = SDL_CreateWindow("GL_PBR_TRAINING", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT,
                               SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 
     if (window == nullptr) {
@@ -73,7 +76,7 @@ int main() {
 //    Shader::buildGLIncludes();
 
     Camera camera;
-    camera.init();
+    camera.init(WIDTH, HEIGHT);
 //    camera.m_fov = M_PI / 4.0f;
     camera.m_position = glm::vec3(0.0f, 3.0f, 3.0f);
     camera.m_direction = glm::normalize(glm::vec3(0.0, -1.0, -1.0));
@@ -116,12 +119,12 @@ int main() {
     PBRDeferredPass pbrDeferredPass = PBRDeferredPass();
 
     // First PBR pass, outputs all data (base color, roughness...) to a framebuffer
-    pbrPrepass.init();
+    pbrPrepass.init(WIDTH, HEIGHT);
     pbrPrepass.setCamera(&camera);
     pbrPrepass.addModel(&model);
 
     // Combine pass
-    pbrDeferredPass.init();
+    pbrDeferredPass.init(WIDTH, HEIGHT);
     // Link framebuffer
     pbrDeferredPass.setInputFramebuffer(pbrPrepass.getOutputFramebuffer());
     pbrDeferredPass.setSkybox(&skybox);
@@ -195,35 +198,38 @@ int main() {
         mat.setParameter("uemissive", emissive);
 
         int size_x = ImGui::GetContentRegionAvail().x/2;
+        float ratio = (float) WIDTH / (float) HEIGHT;
+        int size_y = size_x / ratio;
         ImGui::BeginGroup();
         ImGui::Text("Color");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(0), ImVec2(size_x, size_x));
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(0), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::SameLine();
         ImGui::BeginGroup();
         ImGui::Text("Metallic/Roughness/Reflectance");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(1), ImVec2(size_x, size_x));
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(1), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::BeginGroup();
         ImGui::Text("Emissive");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(2), ImVec2(size_x, size_x));
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(2), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::SameLine();
         ImGui::BeginGroup();
         ImGui::Text("Normal");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(3), ImVec2(size_x, size_x));
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(3), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::BeginGroup();
         ImGui::Text("Position");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(4), ImVec2(size_x, size_x));
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(4), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::SameLine();
         ImGui::BeginGroup();
         ImGui::Text("Occlusion/Clearcoat/Clearcoat Roughness");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(5), ImVec2(size_x, size_x));
+        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(5), ImVec2(size_x, size_y));
         ImGui::EndGroup();
-
         ImGui::End();
+
+
 
         ImGui::Render();
 

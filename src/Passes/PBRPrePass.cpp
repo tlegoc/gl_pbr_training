@@ -8,10 +8,10 @@
 
 #include <iostream>
 
-void PBRPrePass::init() {
+void PBRPrePass::init(int width, int height) {
     std::cout << "\t-- Initializing PBR Prepass" << std::endl;
 
-    m_output_framebuffer.setSize(800, 800);
+    m_output_framebuffer.setSize(width, height);
 
     // Color
     m_output_framebuffer.addTexture(GL_RGBA);

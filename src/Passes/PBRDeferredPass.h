@@ -25,7 +25,7 @@ private:
 
     const Camera *m_camera;
 public:
-    void init() override;
+    void init(int width, int height) override;
 
     void setInputFramebuffer(const Framebuffer *framebuffer);
 

@@ -11,7 +11,7 @@ class Pass {
 protected:
 
 public:
-    virtual void init() = 0;
+    virtual void init(int width, int height) = 0;
 
     const char* m_name{};
 
