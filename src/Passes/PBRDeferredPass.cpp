@@ -87,6 +87,11 @@ void PBRDeferredPass::execute() {
     glActiveTexture(GL_TEXTURE6);
     glBindTexture(GL_TEXTURE_CUBE_MAP, m_skybox->getCubemap());
 
+//    glUniform3f(glGetUniformLocation(m_shader.getProgram(), "camera_dir"), m_camera->m_direction.x, m_camera->m_direction.y, m_camera->m_direction.z);
+
+    glUniformMatrix4fv(glGetUniformLocation(m_shader.getProgram(), "view"), 1, GL_FALSE, &m_camera->m_view[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(m_shader.getProgram(), "projection"), 1, GL_FALSE, &m_camera->m_projection[0][0]);
+
     glBindVertexArray(m_vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);

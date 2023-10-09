@@ -1,8 +1,7 @@
 #version 450
-// Implementation heavily based on Google's filament
-// https://google.github.io/filament/Filament.html
 
 #include "../common/pbr.glsl"
+#include "../common/common.glsl"
 
 in vec2 vUV;
 
@@ -15,12 +14,12 @@ uniform sampler2D sampler_occ_cc_ccrough;
 
 uniform samplerCube cubemap;
 
+uniform mat4x4 view;
+uniform mat4x4 projection;
+
 out vec3 color;
 
-struct CameraProperties {
-    vec3 position;
-};
-
+vec3 l = vec3(0.0, -1.0f, 0.0f);
 
 void main() {
     vec4 base_color = texture(sampler_base_color, vUV).rgba;
@@ -42,7 +41,13 @@ void main() {
     float clearcoatPerceptualRoughness = texture(sampler_occ_cc_ccrough, vUV).b;
     vec3 emissive = texture(sampler_emissive, vUV).rgb;
 
+    // Too lazy to add another uniform, my uniform management is bad enough as it is
+    float fov = 2.0*atan( 1.0/projection[1][1] ) * 180.0 / PI;
+    vec3 v = (inverse(projection * view) * vec4((vUV - .5f) * fov, 1.0, 1.0)).xyz;
+    v = normalize(v);
 
-    color = base_color.rgb;
+    vec3 h = normalize(l+v)/2.0f;
+
+    color = D_GGX(dot(h, normal), perceptual_roughness).xxx;
 }
 

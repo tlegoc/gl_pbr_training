@@ -34,15 +34,15 @@ public:
 
     void use();
 
-    void setParameter(std::string param, float value);
-    void setParameter(std::string param, glm::vec2 value);
-    void setParameter(std::string param, glm::vec3 value);
-    void setParameter(std::string param, glm::vec4 value);
+    void setParameter(const std::string& param, float value);
+    void setParameter(const std::string& param, glm::vec2 value);
+    void setParameter(const std::string& param, glm::vec3 value);
+    void setParameter(const std::string& param, glm::vec4 value);
 
-    float getFloatParameter(std::string param);
-    glm::vec2 getVec2Parameter(std::string param);
-    glm::vec3 getVec3Parameter(std::string param);
-    glm::vec4 getVec4Parameter(std::string param);
+    float getFloatParameter(const std::string& param);
+    glm::vec2 getVec2Parameter(const std::string& param);
+    glm::vec3 getVec3Parameter(const std::string& param);
+    glm::vec4 getVec4Parameter(const std::string& param);
 };
 
 

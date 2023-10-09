@@ -139,6 +139,7 @@ int main() {
     auto quit = false;
     float camera_distance = 3.0f;
     bool camera_auto_rotate = true;
+    GLuint fullscreen_text = -1;
     while (!quit) {
         last_time = time;
         time = SDL_GetTicks64();
@@ -190,46 +191,44 @@ int main() {
         ImGui::ColorEdit3("Emissive", &emissive.x);
 
         // Yes this is very bad
-        // Don't do that at home
+        // Don't do this at home
         mat.setParameter("ubase_color", base_color);
         mat.setParameter("umetallic", metallic);
         mat.setParameter("uroughness", roughness);
         mat.setParameter("ureflectance", reflectance);
         mat.setParameter("uemissive", emissive);
 
-        int size_x = ImGui::GetContentRegionAvail().x/2;
+        int size_x = ImGui::GetContentRegionAvail().x / 2;
         float ratio = (float) WIDTH / (float) HEIGHT;
         int size_y = size_x / ratio;
         ImGui::BeginGroup();
         ImGui::Text("Color");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(0), ImVec2(size_x, size_y));
+        ImGui::Image((void *) (intptr_t) pbrPrepass.getOutputFramebuffer()->getTexture(0), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::SameLine();
         ImGui::BeginGroup();
         ImGui::Text("Metallic/Roughness/Reflectance");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(1), ImVec2(size_x, size_y));
+        ImGui::Image((void *) (intptr_t) pbrPrepass.getOutputFramebuffer()->getTexture(1), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::BeginGroup();
         ImGui::Text("Emissive");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(2), ImVec2(size_x, size_y));
+        ImGui::Image((void *) (intptr_t) pbrPrepass.getOutputFramebuffer()->getTexture(2), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::SameLine();
         ImGui::BeginGroup();
         ImGui::Text("Normal");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(3), ImVec2(size_x, size_y));
+        ImGui::Image((void *) (intptr_t) pbrPrepass.getOutputFramebuffer()->getTexture(3), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::BeginGroup();
         ImGui::Text("Position");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(4), ImVec2(size_x, size_y));
+        ImGui::Image((void *) (intptr_t) pbrPrepass.getOutputFramebuffer()->getTexture(4), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::SameLine();
         ImGui::BeginGroup();
         ImGui::Text("Occlusion/Clearcoat/Clearcoat Roughness");
-        ImGui::Image((void*)(intptr_t)pbrPrepass.getOutputFramebuffer()->getTexture(5), ImVec2(size_x, size_y));
+        ImGui::Image((void *) (intptr_t) pbrPrepass.getOutputFramebuffer()->getTexture(5), ImVec2(size_x, size_y));
         ImGui::EndGroup();
         ImGui::End();
-
-
 
         ImGui::Render();
 

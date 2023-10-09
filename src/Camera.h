@@ -7,8 +7,14 @@
 
 #include <glm/glm.hpp>
 
+
 class Camera {
 public:
+    struct CameraProperties {
+        glm::vec3 position;
+        glm::vec3 direction;
+    };
+
     glm::vec3 m_position{};
     glm::vec3 m_direction{};
     glm::vec3 m_up{};
@@ -25,6 +31,8 @@ public:
     void updateProjection();
 
     void init(int width, int height);
+
+    CameraProperties getCameraProperties();
 };
 
 

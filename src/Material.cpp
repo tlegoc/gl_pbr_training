@@ -36,7 +36,7 @@ void Material::use() {
 }
 
 // Very bad code, but I'm not supposed to optimize things yet, just try out pbr
-void Material::setParameter(std::string param, float value) {
+void Material::setParameter(const std::string& param, float value) {
     if (std::find(m_float_parameters_uniforms.begin(), m_float_parameters_uniforms.end(), param) != m_float_parameters_uniforms.end()) {
         m_float_parameters[std::find(m_float_parameters_uniforms.begin(), m_float_parameters_uniforms.end(), param) - m_float_parameters_uniforms.begin()] = value;
     } else {
@@ -45,7 +45,7 @@ void Material::setParameter(std::string param, float value) {
     }
 }
 
-void Material::setParameter(std::string param, glm::vec2 value) {
+void Material::setParameter(const std::string& param, glm::vec2 value) {
     if (std::find(m_vec2_parameters_uniforms.begin(), m_vec2_parameters_uniforms.end(), param) != m_vec2_parameters_uniforms.end()) {
         m_vec2_parameters[std::find(m_vec2_parameters_uniforms.begin(), m_vec2_parameters_uniforms.end(), param) - m_vec2_parameters_uniforms.begin()] = value;
     } else {
@@ -54,7 +54,7 @@ void Material::setParameter(std::string param, glm::vec2 value) {
     }
 }
 
-void Material::setParameter(std::string param, glm::vec3 value) {
+void Material::setParameter(const std::string& param, glm::vec3 value) {
     if (std::find(m_vec3_parameters_uniforms.begin(), m_vec3_parameters_uniforms.end(), param) != m_vec3_parameters_uniforms.end()) {
         m_vec3_parameters[std::find(m_vec3_parameters_uniforms.begin(), m_vec3_parameters_uniforms.end(), param) - m_vec3_parameters_uniforms.begin()] = value;
     } else {
@@ -63,7 +63,7 @@ void Material::setParameter(std::string param, glm::vec3 value) {
     }
 }
 
-void Material::setParameter(std::string param, glm::vec4 value) {
+void Material::setParameter(const std::string& param, glm::vec4 value) {
     if (std::find(m_vec4_parameters_uniforms.begin(), m_vec4_parameters_uniforms.end(), param) != m_vec4_parameters_uniforms.end()) {
         m_vec4_parameters[std::find(m_vec4_parameters_uniforms.begin(), m_vec4_parameters_uniforms.end(), param) - m_vec4_parameters_uniforms.begin()] = value;
     } else {
@@ -72,18 +72,18 @@ void Material::setParameter(std::string param, glm::vec4 value) {
     }
 }
 
-float Material::getFloatParameter(std::string param) {
+float Material::getFloatParameter(const std::string& param) {
     return m_float_parameters[std::find(m_float_parameters_uniforms.begin(), m_float_parameters_uniforms.end(), param) - m_float_parameters_uniforms.begin()];
 }
 
-glm::vec2 Material::getVec2Parameter(std::string param) {
+glm::vec2 Material::getVec2Parameter(const std::string& param) {
     return m_vec2_parameters[std::find(m_vec2_parameters_uniforms.begin(), m_vec2_parameters_uniforms.end(), param) - m_vec2_parameters_uniforms.begin()];
 }
 
-glm::vec3 Material::getVec3Parameter(std::string param) {
+glm::vec3 Material::getVec3Parameter(const std::string& param) {
     return m_vec3_parameters[std::find(m_vec3_parameters_uniforms.begin(), m_vec3_parameters_uniforms.end(), param) - m_vec3_parameters_uniforms.begin()];
 }
 
-glm::vec4 Material::getVec4Parameter(std::string param) {
+glm::vec4 Material::getVec4Parameter(const std::string& param) {
     return m_vec4_parameters[std::find(m_vec4_parameters_uniforms.begin(), m_vec4_parameters_uniforms.end(), param) - m_vec4_parameters_uniforms.begin()];
 }

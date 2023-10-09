@@ -27,3 +27,10 @@ void Camera::init(int width, int height) {
     updateView();
     updateProjection();
 }
+
+Camera::CameraProperties Camera::getCameraProperties() {
+    return {
+        m_position,
+        m_direction
+    };
+}
