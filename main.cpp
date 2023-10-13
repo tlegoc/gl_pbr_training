@@ -111,6 +111,7 @@ int main() {
     Model model = Model();
     model.load("assets/material_ball.obj");
 //    model.m_scale = glm::vec3(1.5f);
+//    model.m_rotation.x += 3.0f;
     model.updateModelMatrix();
     model.setMaterial(mat);
 

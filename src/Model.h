@@ -28,7 +28,7 @@ public:
     glm::vec3 m_rotation{};
     glm::vec3 m_scale{1.0f, 1.0f, 1.0f};
 
-    glm::mat4 m_model_matrix;
+    glm::mat4 m_model_matrix, m_translate_matrix, m_scale_matrix, m_rotate_matrix;
 
     void load(const std::string &path);
 

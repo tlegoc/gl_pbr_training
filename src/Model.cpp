@@ -88,6 +88,7 @@ void Model::draw(glm::mat4 view, glm::mat4 projection) const {
     glUniformMatrix4fv(0, 1, GL_FALSE, &m_model_matrix[0][0]);
     glUniformMatrix4fv(1, 1, GL_FALSE, &view[0][0]);
     glUniformMatrix4fv(2, 1, GL_FALSE, &projection[0][0]);
+    glUniformMatrix4fv(3, 1, GL_FALSE, &m_rotate_matrix[0][0]);
 
     glDrawElements(GL_TRIANGLES, m_num_indices, GL_UNSIGNED_INT, nullptr);
 }
@@ -98,11 +99,12 @@ void Model::setNumIndices(GLuint num_indices) {
 
 void Model::updateModelMatrix() {
     m_model_matrix = glm::mat4(1.0f);
-    m_model_matrix = glm::translate(m_model_matrix, m_position);
-    m_model_matrix = glm::rotate(m_model_matrix, m_rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-    m_model_matrix = glm::rotate(m_model_matrix, m_rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-    m_model_matrix = glm::rotate(m_model_matrix, m_rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
-    m_model_matrix = glm::scale(m_model_matrix, m_scale);
+    m_translate_matrix = glm::translate(m_model_matrix, m_position);
+    m_rotate_matrix = glm::rotate(m_model_matrix, m_rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+    m_rotate_matrix = glm::rotate(m_rotate_matrix, m_rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+    m_rotate_matrix = glm::rotate(m_rotate_matrix, m_rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+    m_scale_matrix = glm::scale(m_model_matrix, m_scale);
+    m_model_matrix = m_scale_matrix * m_rotate_matrix * m_translate_matrix;
 }
 
 glm::mat4 Model::getModelMatrix() const {
