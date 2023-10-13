@@ -29,7 +29,7 @@ void main() {
     }
 
     // Geometry values
-    vec3 normal = texture(sampler_normal, vUV).rgb;
+    vec3 n = texture(sampler_normal, vUV).rgb;
     vec3 position = texture(sampler_position, vUV).rgb;
 
     // Material values
@@ -41,13 +41,39 @@ void main() {
     float clearcoatPerceptualRoughness = texture(sampler_occ_cc_ccrough, vUV).b;
     vec3 emissive = texture(sampler_emissive, vUV).rgb;
 
+    vec3 camera_pos = inverse(view)[3].xyz;
+
+    float a = perceptual_roughness;
+
     // Too lazy to add another uniform, my uniform management is bad enough as it is
-    float fov = 2.0*atan( 1.0/projection[1][1] ) * 180.0 / PI;
-    vec3 v = (inverse(projection * view) * vec4((vUV - .5f) * fov, 1.0, 1.0)).xyz;
-    v = normalize(v);
+    vec3 v = normalize(position - camera_pos);
+    vec3 h = normalize(v + l);
+    float NoV = abs(dot(n, v)) + 1e-5;
+    float NoL = clamp(dot(n, l), 0.0, 1.0);
+    float NoH = clamp(dot(n, h), 0.0, 1.0);
+    float LoH = clamp(dot(l, h), 0.0, 1.0);
+    vec3 f0 = computeF0(base_color, metallic, reflectance);
 
-    vec3 h = normalize(l+v)/2.0f;
+    float D = D_GGX(NoH, a);
+    vec3  F = F_Schlick(LoH, f0);
+    float V = V_SmithGGXCorrelated(NoV, NoL, perceptual_roughness);
 
-    color = D_GGX(dot(h, normal), perceptual_roughness).xxx;
+
+    // specular BRDF
+    vec3 Fr = (D * V) * F;
+
+    // diffuse BRDF
+    vec3 Fd = base_color.xyz * Fd_Lambert();
+
+//    color = D_GGX_fast(perceptual_roughness, NoH, n, h).xxx;
+//    color = D_GGX(NoH, perceptual_roughness).xxx;
+//    color =   NoH.xxx;
+//    color = V_SmithGGXCorrelated(NoV, NoL, perceptual_roughness).xxx;
+//    color = v.xxx;
+//    color = v;
+    // Values taken from the filament source code
+//    color = F_Schlick(0.04, 1.0, VoH).xxx;
+    color = Fd + Fr;
 }
+
 
