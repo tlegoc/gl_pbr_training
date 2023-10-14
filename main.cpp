@@ -112,6 +112,7 @@ int main() {
     model.load("assets/material_ball.obj");
 //    model.m_scale = glm::vec3(1.5f);
 //    model.m_rotation.x += 3.0f;
+    model.m_position = glm::vec3(0.0f, -0.5f, 0.0f);
     model.updateModelMatrix();
     model.setMaterial(mat);
 
@@ -235,7 +236,7 @@ int main() {
 
         if (camera_auto_rotate) {
             camera.m_position = glm::vec3(glm::cos(time / 1000.0f) * camera_distance,
-                                          glm::cos(time / 10000.0f) * camera_distance,
+                                          0, //glm::cos(time / 10000.0f) * camera_distance,
                                           glm::sin(time / 1000.0f) * camera_distance);
             camera.m_direction = glm::normalize(-camera.m_position);
         }
