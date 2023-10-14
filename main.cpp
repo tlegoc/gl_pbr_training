@@ -97,13 +97,13 @@ int main() {
 
     Material mat;
     mat.setShader(shader);
-    glm::vec4 base_color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    glm::vec4 base_color = glm::vec4(0.98f, 0.90f, 0.59f, 1.0f);
     mat.setParameter("ubase_color", base_color);
     float metallic = 0.0f;
     mat.setParameter("umetallic", metallic);
     float roughness = 1.0f;
     mat.setParameter("uroughness", roughness);
-    float reflectance = 0.5f;
+    float reflectance = 0.04f;
     mat.setParameter("ureflectance", reflectance);
     glm::vec3 emissive = glm::vec3(0.0f, 0.0f, 0.0f);
     mat.setParameter("uemissive", emissive);

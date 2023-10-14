@@ -51,15 +51,14 @@ vec3 computeF0(const vec4 baseColor, float metallic, float reflectance) {
     return baseColor.rgb * metallic + (reflectance * (1.0 - metallic));
 }
 
-//float Fd_Burley(float NoV, float NoL, float LoH, float roughness) {
-//    float f90 = 0.5 + 2.0 * roughness * LoH * LoH;
-//    float lightScatter = F_Schlick(NoL, 1.0, f90);
-//    float viewScatter = F_Schlick(NoV, 1.0, f90);
-//    return lightScatter * viewScatter * (1.0 / PI);
-//}
+float Fd_Burley(float NoV, float NoL, float LoH, float roughness) {
+    float f90 = 0.5 + 2.0 * roughness * LoH * LoH;
+    float lightScatter = F_Schlick(NoL, 1.0, f90);
+    float viewScatter = F_Schlick(NoV, 1.0, f90);
+    return lightScatter * viewScatter * (1.0 / PI);
+}
 
 float Fd_Lambert() {
     return 1.0 / PI;
 }
-
 #endif
