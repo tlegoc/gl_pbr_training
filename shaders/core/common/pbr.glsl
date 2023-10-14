@@ -1,6 +1,7 @@
 #ifndef PBR_GLSL
 #define PBR_GLSL
 
+#extension GL_NV_shadow_samplers_cube : enable
 #define PI 3.141592653589793238462643383279
 
 float D_GGX(float NoH, float roughness) {
@@ -47,10 +48,6 @@ vec3 F_Schlick(float u, vec3 f0) {
     return f + f0 * (1.0 - f);
 }
 
-vec3 computeF0(const vec4 baseColor, float metallic, float reflectance) {
-    return baseColor.rgb * metallic + (reflectance * (1.0 - metallic));
-}
-
 float Fd_Burley(float NoV, float NoL, float LoH, float roughness) {
     float f90 = 0.5 + 2.0 * roughness * LoH * LoH;
     float lightScatter = F_Schlick(NoL, 1.0, f90);
@@ -60,5 +57,9 @@ float Fd_Burley(float NoV, float NoL, float LoH, float roughness) {
 
 float Fd_Lambert() {
     return 1.0 / PI;
+}
+
+float V_Kelemen(float LoH) {
+    return 0.25 / (LoH * LoH);
 }
 #endif
