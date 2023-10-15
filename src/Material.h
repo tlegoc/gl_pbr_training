@@ -21,6 +21,7 @@ private:
     std::vector<GLuint> m_textures{};
     std::vector<std::string> m_texture_uniforms{};
 
+    // Very bad
     std::vector<glm::vec3> m_vec3_parameters{};
     std::vector<std::string> m_vec3_parameters_uniforms{};
     std::vector<glm::vec2> m_vec2_parameters{};
@@ -39,10 +40,10 @@ public:
     void setParameter(const std::string& param, glm::vec3 value);
     void setParameter(const std::string& param, glm::vec4 value);
 
-    float getFloatParameter(const std::string& param);
-    glm::vec2 getVec2Parameter(const std::string& param);
-    glm::vec3 getVec3Parameter(const std::string& param);
-    glm::vec4 getVec4Parameter(const std::string& param);
+    float getFloatParameter(const std::string& param) const;
+    glm::vec2 getVec2Parameter(const std::string& param) const;
+    glm::vec3 getVec3Parameter(const std::string& param) const;
+    glm::vec4 getVec4Parameter(const std::string& param) const;
 };
 
 
