@@ -4,6 +4,15 @@ Small OpenGL experiment meant to understand deferred rendering and PBR.
 The overall "rendergraph"/rendering engine could be improved to be more flexible and less hardcoded.
 Code is also very bad on some parts (shader/material, shader parameters, how textures and framebuffers are handled).
 
+# TODO
+
+- [ ] Improve code quality
+- [ ] Better material system
+- [ ] True rendergraph implementation
+- [ ] Finished basic PBR implementation
+- [ ] Scene handling
+- [ ] Engine init function
+
 # How to build
 
 Enable symlinks if you're on windows.
