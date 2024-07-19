@@ -1,3 +1,7 @@
+# IMPORTANT
+
+This project is not finished, and the code quality isn't great. The project is dead, but the core idea still exists and I'll come back to it when I have the time. If you want a better representation of my skills, check out my most recent projects.
+
 # gl_pbr_training
 
 Small OpenGL experiment meant to understand deferred rendering and PBR.
